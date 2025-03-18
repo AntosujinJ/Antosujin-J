@@ -30,9 +30,14 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
+    },
+    "banner_KKiiLq": {
+      "type": "banner",
+      "settings": {}
     }
   },
   "order": [
-    "header"
+    "header",
+    "banner_KKiiLq"
   ]
 }
