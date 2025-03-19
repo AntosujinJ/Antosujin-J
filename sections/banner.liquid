@@ -93,7 +93,7 @@
     font-size:16px;
     position:relative;
     overflow: hidden;
-    transition: background-color 0.3s ease; /* Smooth transition for non-animated state */
+    transition: 0.3s ease; /* Smooth transition for non-animated state */
 }
 
 .navbar-container button:hover {
@@ -102,12 +102,12 @@
 
 @keyframes colorSlide {
   0% {
-    background: linear-gradient(to right, #e8e81b 50%, black 50%); /* Gradient with yellow/black division */
-    background-position: 100% 0; /* Start off-screen to the right */
+    transform:scaleX(0);
+    background-color:black;
   }
   100% {
-    background: linear-gradient(to right, #e8e81b 50%, black 50%);
-    background-position: 0 0; /* Move gradient to the left */
+   transform:scaleX(1);
+   background-color:black;
   }
 }
 </style>
