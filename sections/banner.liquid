@@ -80,7 +80,6 @@
   
   .navbar-container{
     max-width:100%;
-
     padding:0px 20px;
     display:flex;
     justify-content:space-between;
@@ -92,15 +91,22 @@
     padding:20px 15px 20px 25px ;
     border:none;
     font-size:16px;
-  
+    position:relative;
   }
  .navbar-container button:hover{
- animation:top 1s linear alternate;
+ animation:top 0.5s ease-out forward;
  }
   
 
   @keyframes top{
-  to{
-  background-color:black;
-  color:white;}}
+  0%{
+  transform:translateX(100%);
+   background-color:#e8e81b;
+   color:black;
+  }
+  100%{
+   transform:translateX(0);
+   background-color:black;
+   color:white;
+  }}
 </style>
