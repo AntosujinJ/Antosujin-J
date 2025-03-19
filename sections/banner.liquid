@@ -93,19 +93,16 @@
     font-size:16px;
     position:relative;
     overflow: hidden;
-    transition: 0.3s ease; /* Smooth transition for non-animated state */
+    transition: 1s ease; /* Smooth transition for non-animated state */
 }
 
-.navbar-container button:hover {
-  animation: colorSlide 1s ease ; /* Apply animation on hover */
-}
 
-@keyframes colorSlide {
-  0% {
+
+button:hover::before{
     transform:scaleX(0);
     background-color:black;
   }
-  100% {
+button:hover::after {
    transform:scaleX(1);
    background-color:black;
   }
