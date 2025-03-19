@@ -93,12 +93,13 @@
     font-size:16px;
     position:relative;
     overflow: hidden;
+    background-image: linear-gradient(to right, #e8e81b, #ffffff, #e8e81b); /* Added initial gradient */
+  background-size: 200% 100%;
         
   }
  .navbar-container button:hover{
 animation:loader 3s infinite linear;
- background: linear-gradient(to right,#ffffff);
-background-size:50px 50px;
+ background-image: linear-gradient(to right, #e8e81b, #ffffff, #e8e81b);
  }
   
 
@@ -107,9 +108,9 @@ background-size:50px 50px;
 @keyframes loader {
 
     0%{
-        background-position: -50px 0px;
+        background-position: 200% 0;
     }
     100%{
-        background-position: 50px 0px;
+        background-position: 0 0;
     }
 </style>
