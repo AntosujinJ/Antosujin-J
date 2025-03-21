@@ -215,138 +215,146 @@
     width: 100%;
   }
 </style>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const gridItems = document.querySelectorAll('.grid-item');
-  const modal = document.getElementById('imageModal');
-  const modalImage = document.querySelector('.modal-image');
-  const modalTitle = document.querySelector('.modal-title');
-  const modalDescription = document.querySelector('.modal-description');
-  const modalPrice = document.querySelector('.modal-price');
-  const colorSelect = document.getElementById('colorSelect');
-  const sizeButtons = document.getElementById('sizeButtons');
-  const closeButton = document.querySelector('.close-button');
-  const addToCartButton = document.querySelector('.add-to-cart');
-  let selectedColor = null;
-  let selectedSize = null;
-  let selectedHandle = "";
-  let productVariants = [];
+    const gridItems = document.querySelectorAll('.grid-item');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.querySelector('.modal-image');
+    const modalTitle = document.querySelector('.modal-title');
+    const modalDescription = document.querySelector('.modal-description');
+    const modalPrice = document.querySelector('.modal-price');
+    const colorSelect = document.getElementById('colorSelect');
+    const sizeButtons = document.getElementById('sizeButtons');
+    const closeButton = document.querySelector('.close-button');
+    const addToCartButton = document.querySelector('.add-to-cart');
+    let selectedColor = null;
+    let selectedSize = null;
+    let selectedHandle = "";
+    let productVariants = [];
 
-  gridItems.forEach(item => {
-    item.addEventListener('click', function() {
-      selectedHandle = this.getAttribute('data-handle');
-      modalImage.src = this.getAttribute('data-image');
-      modalTitle.textContent = this.getAttribute('data-title');
-      modalDescription.textContent = this.getAttribute('data-description');
-      modalPrice.textContent = "Price: " + this.getAttribute('data-price');
+    gridItems.forEach(item => {
+        item.addEventListener('click', function() {
+            selectedHandle = this.getAttribute('data-handle');
+            modalImage.src = this.getAttribute('data-image');
+            modalTitle.textContent = this.getAttribute('data-title');
+            modalDescription.textContent = this.getAttribute('data-description');
+            modalPrice.textContent = "Price: " + this.getAttribute('data-price');
 
-      fetch(`/products/${selectedHandle}.js`)
-        .then(response => response.json())
-        .then(product => {
-          productVariants = product.variants;
-          const uniqueColors = new Set();
-          const uniqueSizes = new Set();
-          colorSelect.innerHTML = '';
-          sizeButtons.innerHTML = '';
+            fetch(`/products/${selectedHandle}.js`)
+                .then(response => response.json())
+                .then(product => {
+                    productVariants = product.variants;
+                    const uniqueColors = new Set();
+                    const uniqueSizes = new Set();
+                    colorSelect.innerHTML = '';
+                    sizeButtons.innerHTML = '';
 
-          productVariants.forEach(variant => {
-            if (variant.available) {
-              if (variant.option1 && !uniqueColors.has(variant.option1)) {
-                uniqueColors.add(variant.option1);
-              }
-              if (variant.option2 && !uniqueSizes.has(variant.option2)) {
-                uniqueSizes.add(variant.option2);
-              }
-            }
-          });
+                    productVariants.forEach(variant => {
+                        if (variant.available) {
+                            if (variant.option1 && !uniqueColors.has(variant.option1)) {
+                                uniqueColors.add(variant.option1);
+                            }
+                            if (variant.option2 && !uniqueSizes.has(variant.option2)) {
+                                uniqueSizes.add(variant.option2);
+                            }
+                        }
+                    });
 
-          uniqueColors.forEach(color => {
-            const option = document.createElement('option');
-            option.value = color;
-            option.textContent = color;
-            colorSelect.appendChild(option);
-          });
+                    uniqueColors.forEach(color => {
+                        const option = document.createElement('option');
+                        option.value = color;
+                        option.textContent = color;
+                        colorSelect.appendChild(option);
+                    });
 
-          uniqueSizes.forEach(size => {
-            const button = document.createElement('button');
-            button.textContent = size;
-            button.addEventListener('click', () => {
-              selectedSize = size;
-              sizeButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
-              button.classList.add('selected');
-            });
-            sizeButtons.appendChild(button);
-          });
-        })
-        .then(() => {
-          modal.style.display = 'block';
+                    uniqueSizes.forEach(size => {
+                        const button = document.createElement('button');
+                        button.textContent = size;
+                        button.addEventListener('click', () => {
+                            selectedSize = size;
+                            sizeButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+                            button.classList.add('selected');
+                        });
+                        sizeButtons.appendChild(button);
+                    });
+                })
+                .then(() => {
+                    modal.style.display = 'block';
+                });
         });
     });
-  });
 
-  closeButton.addEventListener('click', function() {
-    modal.style.display = 'none';
-  });
+    closeButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
 
-  window.addEventListener('click', function(event) {
-    if (event.target === modal) {
-      modal.style.display = 'none';
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    addToCartButton.addEventListener('click', function() {
+        selectedColor = colorSelect.value;
+        if (!selectedColor || !selectedSize) {
+            console.log('Please select color and size.');
+            return;
+        }
+
+        const selectedVariant = productVariants.find(variant => variant.option1 === selectedColor && variant.option2 === selectedSize);
+
+        if (selectedVariant) {
+            addToCartWithJacket(selectedVariant.id);
+        } else {
+            console.log('Variant not found.');
+        }
+    });
+
+    function addToCartWithJacket(variantId) {
+        const selectedVariant = productVariants.find(variant => variant.id === variantId);
+
+        if (selectedVariant && selectedVariant.option1 === 'Black' && selectedVariant.option2 === 'Medium') {
+            fetch('/products/Soft-Winter-Jacket.js')
+                .then(response => response.json())
+                .then(jacketProduct => {
+                    if (jacketProduct.variants.length > 0) {
+                        const jacketVariant = jacketProduct.variants.find(v => v.option1 === 'Black' && v.option2 === 'Medium');
+                        if (jacketVariant) {
+                            addToCartAjax([variantId, jacketVariant.id]);
+                        } else {
+                            addToCartAjax([variantId]);
+                            console.log("Soft Winter Jacket Black Medium variant not found, adding the selected item only.");
+                        }
+                    } else {
+                        addToCartAjax([variantId]);
+                        console.log("Soft Winter Jacket variants not found, adding the selected item only.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching Soft-Winter-Jacket:', error);
+                    addToCartAjax([variantId]);
+                });
+        } else {
+            addToCartAjax([variantId]);
+        }
     }
-  });
 
-  addToCartButton.addEventListener('click', function() {
-    selectedColor = colorSelect.value;
-    if (!selectedColor || !selectedSize) {
-      console.log('Please select color and size.');
-      return;
-    }
+    function addToCartAjax(variantIds) {
+        const items = variantIds.map(id => ({ id: id, quantity: 1 }));
 
-    const selectedVariant = productVariants.find(variant => variant.option1 === selectedColor && variant.option2 === selectedSize);
-
-    if (selectedVariant) {
-      addToCartWithJacket(selectedVariant.id);
-    } else {
-      console.log('Variant not found.');
-    }
-  });
-
-  function addToCartWithJacket(variantId) {
-    const selectedVariant = productVariants.find(variant => variant.id === variantId);
-
-    if (selectedVariant && selectedVariant.option1 === 'Black' && selectedVariant.option2 === 'Medium') {
-      fetch('/products/dark-winter-jacket.js')
-        .then(response => response.json())
-        .then(jacketProduct => {
-          if (jacketProduct.variants.length > 0) {
-            const jacketVariantId = jacketProduct.variants[0].id;
-            addToCartAjax([variantId, jacketVariantId]); // Pass an array of variant IDs
-          } else {
-            addToCartAjax([variantId]); // Pass an array with only the main variant ID
-          }
+        fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ items: items })
         })
-        .catch(error => console.error('Error:', error));
-    } else {
-      addToCartAjax([variantId]); // Pass an array with only the main variant ID
+            .then(response => response.json())
+            .then(data => {
+                console.log('Cart updated:', data);
+                window.location.href = '/cart';
+            })
+            .catch(error => console.error('Error:', error));
     }
-  }
-
-  function addToCartAjax(variantIds) {
-    const items = variantIds.map(id => ({ id: id, quantity: 1 }));
-
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ items: items })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Cart updated:', data);
-      window.location.href = '/cart';
-    })
-    .catch(error => console.error('Error:', error));
-  }
 });
 </script>
