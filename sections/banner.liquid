@@ -181,20 +181,26 @@
 
   @media (max-width: 768px) {
     .navbar-container {
-      flex-direction: column; /* Stack items vertically */
-      align-items: flex-start; /* Align to the left */
-      gap: 10px; /* Add spacing between items */
-      padding: 10px;
+    display:flex
+       /* Stack items vertically */
+      align-items: center; /* Align to the left */
+       /* Add spacing between items */
+     
     }
 
     .navbar-container div {
       width: 100%; /* Full width for each item */
     }
 
-    .navbar-container button {
-      width: 100%; /* Full width button */
-      padding: 15px; /* Adjust padding */
-    }
+   .navbar-container button {
+    padding: 5px 10px 5px 10px;
+    border: none;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 1s;
+    z-index: 1;
+  }
 
     .banner {
       height: 600px; /* Adjust banner height */
