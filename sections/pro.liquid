@@ -214,6 +214,44 @@
     cursor: pointer;
     width: 100%;
   }
+
+   @media (max-width: 768px) {
+    .product-grid {
+      grid-template-columns: 1fr; /* Single column on mobile */
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .modal-cont1 {
+      grid-template-columns: 1fr; /* Stack image and details */
+      gap: 20px;
+      width: 90%;
+    }
+
+    .mod {
+      padding-top: 0; /* Remove padding */
+    }
+
+    #sizeButtons button {
+      padding: 15px 30px; /* Adjust button padding */
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
+    #colorSelect {
+      width: 100%; /* Full width select */
+      padding: 10px;
+    }
+
+    .modal-content {
+      width: 95%; /* Adjust modal width */
+      margin: 10% auto;
+    }
+
+    .modal-image{
+        padding-top: 0px;
+    }
+  }
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
