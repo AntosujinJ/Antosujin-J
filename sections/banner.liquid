@@ -179,50 +179,31 @@
     font-size:16px;
   }
 
-  @media (max-width: 768px) {
-    .navbar-container {
-    display:flex
-       /* Stack items vertically */
-      align-items: center; /* Align to the left */
-       /* Add spacing between items */
-     
-    }
+ @media (max-width: 768px) {
+        .navbar-container {
+            justify-content: flex-start; /* Align to the left */
+        }
 
-    .navbar-container div {
-      width: 100%; /* Full width for each item */
-    }
+        .hamburger-menu {
+            display: flex; /* Show hamburger menu */
+        }
 
-   .navbar-container button {
-    padding: 5px 10px 5px 10px;
-    border: none;
-    font-size: 12px;
-    position: relative;
-    overflow: hidden;
-    transition: all 1s;
-    z-index: 1;
-  }
+        .navbar-container div:not(.hamburger-menu):not(.logo) {
+            display: none; /* Hide subheading and button */
+        }
 
-    .banner {
-      height: 600px; /* Adjust banner height */
-    }
+        .banner {
+            height: 400px; /* Further adjust banner height */
+        }
 
-    .banner-content {
-      width: 90%; /* Adjust banner content width */
-      height: auto; /* Allow content height to adjust */
-      padding: 20px; /* Adjust padding */
-      top: 50%; /* Center banner content */
-      left: 50%;
-      transform: translate(-50%, -50%); /* Centers banner content */
-    }
+        .banner-paragraph p {
+            font-size: 14px; /* Further adjust paragraph font size */
+        }
 
-    .banner-content button {
-      width: 100%; /* Full width button */
-      padding: 15px; /* Adjust padding */
+        .bottom-text {
+            padding: 10px; /* Further adjust padding */
+            font-size: 12px; /* Further adjust font size */
+        }
     }
-
-    .banner-paragraph p {
-      font-size: 14px; /* Adjust paragraph font size */
-    }
-  }
 
 </style>
