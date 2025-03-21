@@ -1,6 +1,352 @@
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+  "name": "Product Grid",
+  "settings": [
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Select Products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid"
+    }
+  ]
+}
 {% endschema %}
+
+<h1>Tisso Vision in the wild</h1>
+<div class="product-grid">
+  {% for product in section.settings.products %}
+    <div class="grid-item"
+         data-image="{{ product.featured_image | img_url: 'medium' }}"
+         data-title="{{ product.title }}"
+         data-description="{{ product.description | strip_html }}"
+         data-price="{{ product.price | money }}"
+         data-handle="{{ product.handle }}">
+      <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+    </div>
+  {% endfor %}
+</div>
+
+<div class="modal" id="imageModal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <div class="modal-cont1">
+      <div>
+        <img src="" alt="" class="modal-image">
+      </div>
+      <div class="mod">
+        <h2 class="modal-title"></h2>
+        <p class="modal-price"></p>
+        <p class="modal-description"></p>
+      </div>
+    </div>
+    <div class="modal-options">
+      <div class="size-options">
+        <label>Color:</label>
+        <div id="sizeButtons"></div>
+      </div>
+      <div class="color-options">
+        <label for="colorSelect">Size:</label><br>
+        <select style="width:550px;padding:15px" id="colorSelect"></select>
+      </div>
+    </div>
+    <button class="add-to-cart">ADD TO CART <i class="fa-solid fa-arrow-right"></i></button>
+  </div>
+</div>
+
+<style>
+  /* #uniqueColorsDisplay {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .color-div {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  } */
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .modal-cont1 {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    gap: 10%;
+    width: 80%;
+    margin: auto;
+  }
+
+  .modal-cont1 img {
+    height: 100%;
+    width: 100%;
+  }
+  .mod {
+    padding-top: 50px;
+  }
+
+  /* .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 100px;
+    padding: 20px;
+    text-align: center;
+  } */
+
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: none;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding-top: 50px;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    bottom:60px;
+    max-width: 600px;
+    position: relative;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .modal-image {
+    width: auto;
+    height: auto;
+    padding-top: 50px;
+  }
+
+  .modal-options {
+    margin-top: 15px;
+  }
+
+  .color-options,
+  .size-options {
+    margin-bottom: 10px;
+  }
+
+  .color-buttons {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .color-buttons button {
+    padding: 20px 30px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  #sizeButtons button {
+    padding: 20px 120px 20px 120px;
+    border: 1px solid #ddd;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  #colorSelect {
+    width: 500px;
+    text-align: center;
+    padding: 5px;
+  }
+
+  #sizeButtons button.selected,#colorSelect button.selected
+   {
+    background-color: black;
+    color: white;
+     transition:0.5s;
+  }
+
+  .size-select {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .add-to-cart {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const gridItems = document.querySelectorAll('.grid-item');
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.querySelector('.modal-image');
+  const modalTitle = document.querySelector('.modal-title');
+  const modalDescription = document.querySelector('.modal-description');
+  const modalPrice = document.querySelector('.modal-price');
+  const colorSelect = document.getElementById('colorSelect');
+  const sizeButtons = document.getElementById('sizeButtons');
+  const closeButton = document.querySelector('.close-button');
+  const addToCartButton = document.querySelector('.add-to-cart');
+  let selectedColor = null;
+  let selectedSize = null;
+  let selectedHandle = "";
+  let productVariants = [];
+
+  gridItems.forEach(item => {
+    item.addEventListener('click', function() {
+      selectedHandle = this.getAttribute('data-handle');
+      modalImage.src = this.getAttribute('data-image');
+      modalTitle.textContent = this.getAttribute('data-title');
+      modalDescription.textContent = this.getAttribute('data-description');
+      modalPrice.textContent = "Price: " + this.getAttribute('data-price');
+
+      fetch(`/products/${selectedHandle}.js`)
+        .then(response => response.json())
+        .then(product => {
+          productVariants = product.variants;
+          const uniqueColors = new Set();
+          const uniqueSizes = new Set();
+          colorSelect.innerHTML = '';
+          sizeButtons.innerHTML = '';
+
+          productVariants.forEach(variant => {
+            if (variant.available) {
+              if (variant.option1 && !uniqueColors.has(variant.option1)) {
+                uniqueColors.add(variant.option1);
+              }
+              if (variant.option2 && !uniqueSizes.has(variant.option2)) {
+                uniqueSizes.add(variant.option2);
+              }
+            }
+          });
+
+          uniqueColors.forEach(color => {
+            const option = document.createElement('option');
+            option.value = color;
+            option.textContent = color;
+            colorSelect.appendChild(option);
+          });
+
+          uniqueSizes.forEach(size => {
+            const button = document.createElement('button');
+            button.textContent = size;
+            button.addEventListener('click', () => {
+              selectedSize = size;
+              sizeButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+              button.classList.add('selected');
+            });
+            sizeButtons.appendChild(button);
+          });
+        })
+        .then(() => {
+          modal.style.display = 'block';
+        });
+    });
+  });
+
+  closeButton.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  addToCartButton.addEventListener('click', function() {
+    selectedColor = colorSelect.value;
+    if (!selectedColor || !selectedSize) {
+      console.log('Please select color and size.');
+      return;
+    }
+
+    const selectedVariant = productVariants.find(variant => variant.option1 === selectedColor && variant.option2 === selectedSize);
+
+    if (selectedVariant) {
+      addToCartWithJacket(selectedVariant.id);
+    } else {
+      console.log('Variant not found.');
+    }
+  });
+
+  function addToCartWithJacket(variantId) {
+    const selectedVariant = productVariants.find(variant => variant.id === variantId);
+
+    if (selectedVariant && selectedVariant.option1 === 'Black' && selectedVariant.option2 === 'Medium') {
+      fetch('/products/Soft-Winter-Jacket.js')
+        .then(response => response.json())
+        .then(jacketProduct => {
+          if (jacketProduct.variants.length > 0) {
+            const jacketVariantId = jacketProduct.variants[0].id;
+            addToCartAjax([variantId, jacketVariantId]); // Pass an array of variant IDs
+          } else {
+            addToCartAjax([variantId]); // Pass an array with only the main variant ID
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+      addToCartAjax([variantId]); // Pass an array with only the main variant ID
+    }
+  }
+
+  function addToCartAjax(variantIds) {
+    const items = variantIds.map(id => ({ id: id, quantity: 1 }));
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ items: items })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Cart updated:', data);
+      window.location.href = '/cart';
+    })
+    .catch(error => console.error('Error:', error));
+  }
+});
+</script>
