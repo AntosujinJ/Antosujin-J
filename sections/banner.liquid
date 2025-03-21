@@ -181,40 +181,42 @@
 
  @media (max-width: 768px) {
 
- .banner-content {
-   background-color:none;
-    padding:40px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    position:absolute;
-    top: 300px; /* adjusted for responsiveness */
-    left: 0px;
-    padding-bottom:0;
-    transform: translateY(-50%); /* centers vertically */
-  }
+  @media (max-width: 768px) {
         .navbar-container {
-            justify-content: flex-start; /* Align to the left */
+            justify-content: flex-start;
         }
 
         .hamburger-menu {
-            display: flex; /* Show hamburger menu */
+            display: flex;
         }
 
-        
+        .navbar-container div:not(.hamburger-menu):not(.logo) {
+            display: none;
+        }
+
+        .navbar-section h1 {
+            font-size: 20px;
+        }
 
         .banner {
-            height: 400px; /* Further adjust banner height */
+            height: 400px;
+        }
+
+        .banner-content-mobile {
+            padding: 10px;
+        }
+
+        .banner-content-mobile h1 {
+            font-size: 24px;
         }
 
         .banner-paragraph p {
-            font-size: 14px; /* Further adjust paragraph font size */
+            font-size: 14px;
         }
 
         .bottom-text {
-            padding: 10px; /* Further adjust padding */
-            font-size: 12px; /* Further adjust font size */
+            padding: 10px;
+            font-size: 12px;
         }
     }
 
