@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedVariant = productVariants.find(variant => variant.id === variantId);
 
     if (selectedVariant && selectedVariant.option1 === 'Black' && selectedVariant.option2 === 'Medium') {
-      fetch('/products/Soft-Winter-Jacket.js')
+      fetch('/products/dark-winter-jacket.js')
         .then(response => response.json())
         .then(jacketProduct => {
           if (jacketProduct.variants.length > 0) {
