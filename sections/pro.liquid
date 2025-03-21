@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(jacketProduct => {
                     console.log('Jacket Product Data:', jacketProduct); // Debugging
                     if (jacketProduct.variants.length > 0) {
-                        const jacketVariant = jacketProduct.variants.find(v => v.option1 === 'Black' && v.option2 === 'M');
+                        const jacketVariant = jacketProduct.variants.find(v => v.option1 === 'M' && v.option2 === 'Black');
                         console.log('Jacket Variant Data:', jacketVariant); // Debugging
                         if (jacketVariant) {
                             console.log('Adding variants:', [variantId, jacketVariant.id]); // Debugging
