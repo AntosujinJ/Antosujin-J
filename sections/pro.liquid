@@ -218,65 +218,53 @@
     width: 100%;
   }
 
-   @media (max-width: 768px) {
-    .product-grid {
-      grid-template-columns: auto auto; /* Single column on mobile */
-      gap: 10px;
-      padding: 10px;
-    }
-
-   
-    
-  .modal-content {
-    margin: 5% auto; /* Further adjusted margin for smaller screens */
-    padding: 10px; /* Further reduced padding for smaller screens */
-    left:150px;
-    width:400px;
-    height:300px;
-    bottom:50px;
-  }
-  .modal-cont1{
-    grid-template-columns: auto auto;
+  
+    @media (max-width: 680px) {
+  .product-grid {
+    grid-template-columns: auto auto; /* Two columns on mobile */
     gap: 10px;
-   
+    padding: 10px;
   }
-  .modal-cont1 div{
+
+  .modal-content {
+    margin: 5% auto;
+    padding: 10px;
+    width: 95%; /* Increased width */
+    max-width: 95%; /* Increased max-width */
+    height: auto; /* allow the modal to change height based on content. */
+    bottom:0; /* allow modal to fill the screen */
+  }
+
+  .modal-cont1 {
+    grid-template-columns: auto auto; /* Stacked on mobile */
+    gap: 10px;
+  }
+
+  .modal-cont1 img {
     width: 100%;
+    height: auto;
   }
 
-    .mod {
-      padding-top: 0; /* Remove padding */
-    }
-
-    #sizeButtons button {
-      padding: 5px 10px; /* Adjust button padding */
-      width: 100%;
-      margin-bottom: 5px;
-    }
-
-    #colorSelect {
-      width: 100%; /* Full width select */
-      padding: 10px;
-    }
-
-     
-    .modal-image{
-        padding-top: 0px;
-    }
-    
-     /* #sizeButtons button {
-    padding: 5px 10px 5px 10px;
-    border: 1px solid #ddd;
-   background-color:white;
-    cursor: pointer;
+  .mod {
+    padding-top: 0;
   }
 
-      .color-buttons button {
-    padding: 5px 10px;
-     background-color:white;
-    cursor: pointer;
-  } */
+  #sizeButtons button,
+  .color-buttons button {
+    padding: 8px 12px; /* Adjusted button padding */
+    width: 100%; /* Full width buttons */
+    margin-bottom: 5px;
+  }
 
+  #colorSelect {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .modal-image {
+    padding-top: 0;
+  }
+}
   }
 </style>
 <script>
