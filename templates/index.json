@@ -14,13 +14,22 @@
       "disabled": true,
       "settings": {}
     },
-    "grid_MCBTVk": {
-      "type": "grid",
-      "settings": {}
+    "pro_JwTFEF": {
+      "type": "pro",
+      "settings": {
+        "products": [
+          "black-leather-bag",
+          "blue-silk-tuxedo",
+          "chequered-red-shirt",
+          "classic-leather-jacket",
+          "classic-varsity-top",
+          "dark-winter-jacket"
+        ]
+      }
     }
   },
   "order": [
     "banner_cbgMFx",
-    "grid_MCBTVk"
+    "pro_JwTFEF"
   ]
 }
