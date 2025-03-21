@@ -13,9 +13,14 @@
       "type": "banner",
       "disabled": true,
       "settings": {}
+    },
+    "grid_MCBTVk": {
+      "type": "grid",
+      "settings": {}
     }
   },
   "order": [
-    "banner_cbgMFx"
+    "banner_cbgMFx",
+    "grid_MCBTVk"
   ]
 }
