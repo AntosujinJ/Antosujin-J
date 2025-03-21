@@ -31,13 +31,13 @@
         "padding_bottom": 20
       }
     },
-    "banner_KKiiLq": {
+    "banner_9zBxWL": {
       "type": "banner",
       "settings": {}
     }
   },
   "order": [
     "header",
-    "banner_KKiiLq"
+    "banner_9zBxWL"
   ]
 }
