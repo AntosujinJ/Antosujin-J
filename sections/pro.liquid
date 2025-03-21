@@ -346,24 +346,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function addToCartWithJacket(variantId) {
-        const selectedVariant = productVariants.find(variant => variant.id === variantId);
-
+   
         if (selectedVariant && selectedVariant.option1 === 'Black' && selectedVariant.option2 === 'Medium') {
             fetch('/products/dark-winter-jacket.js')
                 .then(response => response.json())
                 .then(jacketProduct => {
+                    console.log('Jacket Product Data:', jacketProduct); // Debugging
                     if (jacketProduct.variants.length > 0) {
                         const jacketVariant = jacketProduct.variants.find(v => v.option1 === 'Black' && v.option2 === 'Medium');
+                        console.log('Jacket Variant Data:', jacketVariant); // Debugging
                         if (jacketVariant) {
+                            console.log('Adding variants:', [variantId, jacketVariant.id]); // Debugging
                             addToCartAjax([variantId, jacketVariant.id]);
                         } else {
+                            console.log('Soft Winter Jacket Black Medium variant not found, adding the selected item only.');
                             addToCartAjax([variantId]);
-                            console.log("Soft Winter Jacket Black Medium variant not found, adding the selected item only.");
                         }
                     } else {
+                        console.log('Soft Winter Jacket variants not found, adding the selected item only.');
                         addToCartAjax([variantId]);
-                        console.log("Soft Winter Jacket variants not found, adding the selected item only.");
                     }
                 })
                 .catch(error => {
