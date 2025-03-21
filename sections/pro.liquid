@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function addToCartWithJacket(variantId) {
         const selectedVariant = productVariants.find(variant => variant.id === variantId);
 
-        if (selectedVariant && selectedVariant.option1 === 'Black' && selectedVariant.option2 === 'M') {
+        if (selectedVariant && selectedVariant.option1 === 'M' && selectedVariant.option2 === 'Black') {
             fetch('/products/dark-winter-jacket.js')
                 .then(response => response.json())
                 .then(jacketProduct => {
