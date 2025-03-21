@@ -100,7 +100,7 @@
     position:fixed;
     z-index: 10000;
     left: 0px;
-    bottom: 0px;
+    bottom: 20px;
     width: 100%;
     height: 100%;
     overflow: none;
@@ -353,12 +353,12 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch('/products/dark-winter-jacket.js')
                 .then(response => response.json())
                 .then(jacketProduct => {
-                    console.log('Jacket Product Data:', jacketProduct); // Debugging
+                    console.log('Jacket Product Data:', jacketProduct); 
                     if (jacketProduct.variants.length > 0) {
                         const jacketVariant = jacketProduct.variants.find(v => v.option1 === 'M' && v.option2 === 'Black');
-                        console.log('Jacket Variant Data:', jacketVariant); // Debugging
+                        console.log('Jacket Variant Data:', jacketVariant); 
                         if (jacketVariant) {
-                            console.log('Adding variants:', [variantId, jacketVariant.id]); // Debugging
+                            console.log('Adding variants:', [variantId, jacketVariant.id]); 
                             addToCartAjax([variantId, jacketVariant.id]);
                         } else {
                             console.log("Soft Winter Jacket Black Medium variant not found, adding the selected item only.");
