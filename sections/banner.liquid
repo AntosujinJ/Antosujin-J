@@ -179,4 +179,44 @@
     font-size:16px;
   }
 
+  @media (max-width: 768px) {
+    .navbar-container {
+      flex-direction: column; /* Stack items vertically */
+      align-items: flex-start; /* Align to the left */
+      gap: 10px; /* Add spacing between items */
+      padding: 10px;
+    }
+
+    .navbar-container div {
+      width: 100%; /* Full width for each item */
+    }
+
+    .navbar-container button {
+      width: 100%; /* Full width button */
+      padding: 15px; /* Adjust padding */
+    }
+
+    .banner {
+      height: 600px; /* Adjust banner height */
+    }
+
+    .banner-content {
+      width: 90%; /* Adjust banner content width */
+      height: auto; /* Allow content height to adjust */
+      padding: 20px; /* Adjust padding */
+      top: 50%; /* Center banner content */
+      left: 50%;
+      transform: translate(-50%, -50%); /* Centers banner content */
+    }
+
+    .banner-content button {
+      width: 100%; /* Full width button */
+      padding: 15px; /* Adjust padding */
+    }
+
+    .banner-paragraph p {
+      font-size: 14px; /* Adjust paragraph font size */
+    }
+  }
+
 </style>
